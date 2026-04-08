@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections | Justin — Digital Shop</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #367D8A;
+            --bg: #010001;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-muted: rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+         /* --- Navigation --- */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(1, 0, 1, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-link-custom {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 25px;
+            transition: 0.3s;
+        }
+
+        .nav-link-custom:hover {
+            color: var(--primary);
+        }
+
+
+        /* --- Hero --- */
+        .collection-hero {
+            padding: clamp(40px, 10vw, 100px) 0;
+            background: radial-gradient(circle at 90% 10%, rgba(54, 125, 138, 0.12), transparent 50%);
+        }
+
+        .hero-title {
+            font-weight: 900;
+            font-size: clamp(2rem, 10vw, 5rem);
+            line-height: 0.85;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        /* --- Filter Bar (Restored Design) --- */
+        .filter-bar {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .filter-bar::-webkit-scrollbar { display: none; }
+        .filter-btn {
+            background: transparent; border: none;
+            color: var(--text-muted); font-size: 0.65rem;
+            font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; padding: 10px 20px;
+            white-space: nowrap;
+        }
+        .filter-btn.active { color: var(--primary); }
+
+        /* --- Product Card (Restored Design) --- */
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: clamp(15px, 4vw, 30px);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), border 0.3s ease;
+            height: 100%;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .product-img-box { width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .product-info { padding: clamp(12px, 4vw, 25px); }
+
+       /* --- ENHANCED: Reviews (Justin Aesthetic) --- */
+.review-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px; /* Slightly smoother radius */
+    padding: clamp(20px, 4vw, 30px);
+    height: auto;
+    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    backdrop-filter: blur(10px); /* Adds that premium glass effect */
+}
+
+.review-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary);
+    transform: translateY(-5px);
+}
+
+.review-text { 
+    font-size: 0.9rem; 
+    line-height: 1.6;
+    opacity: 0.9; 
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+/* User Handle Styling */
+.review-user {
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+        /* --- Responsive Logic for 320px --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Default 1 col for 320px */
+            gap: 15px;
+        }
+        @media (min-width: 480px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 992px) { .grid-container { grid-template-columns: repeat(3, 1fr); } }
+
+        /* --- Restored Modal Grid --- */
+        .modal-content {
+            background: #030303 !important;
+            border: 1px solid var(--border) !important;
+            border-radius: clamp(20px, 5vw, 40px) !important;
+        }
+        .modal-grid { display: flex; flex-direction: column; }
+        @media (min-width: 992px) { .modal-grid { flex-direction: row; } }
+        .modal-visual { width: 100%; }
+        @media (min-width: 992px) { .modal-visual { width: 50%; } }
+        .modal-details { padding: clamp(20px, 5vw, 40px); width: 100%; }
+        @media (min-width: 992px) { .modal-details { width: 50%; } }
+
+        .btn-action {
+            width: 100%; background: #fff; color: #000; border: none;
+            padding: 15px; border-radius: 12px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        footer { padding: 60px 0; border-top: 1px solid var(--border); text-align: center; }
+    </style>
+</head>
+<body>
+
+    <header class="nav-header">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="#" class="nav-logo">JUSTIN<span style="color: var(--primary);">.</span></a>
+            <nav class="d-none d-md-block">
+                <a href="j3.html" class="nav-link-custom">Home</a>
+                <a href="#about" class="nav-link-custom">Profile</a>
+                <a href="#expertise" class="nav-link-custom">Expertise</a>
+                <a href="#philosophy" class="nav-link-custom">Values</a>
+                <a href="#contact" class="nav-link-custom">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="collection-hero container">
+            <span style="color:var(--primary); font-weight:800; letter-spacing:6px; font-size:0.6rem; text-transform:uppercase;">Spring '26</span>
+            <h1 class="hero-title">ENGINEERED<br><span style="color:var(--primary)">ESSENTIALS</span></h1>
+        </section>
+
+        <div class="container">
+            <div class="filter-bar">
+                <button class="filter-btn active">ALL DROPS</button>
+                <button class="filter-btn">APPAREL</button>
+                <button class="filter-btn">ACCESSORIES</button>
+                <button class="filter-btn">S&S EXCLUSIVE</button>
+            </div>
+        </div>
+
+     <section class="container py-5">
+    <div class="grid-container">
+        <div class="product-card" data-bs-toggle="modal" data-bs-target="#shopModal"
+             data-name="VOID TEE V1" data-price="$45.00" data-spec="400GSM HEAVYWEIGHT COTTON" 
+             data-img="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1000">
+            <div class="product-img-box"><img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1000"></div>
+            <div class="product-info">
+                <span style="color:var(--primary); font-size:0.6rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;">Vault-01</span>
+                <h3 class="fw-700 mt-1 mb-1" style="font-size: 1rem;">VOID TEE V1</h3>
+                <p class="small opacity-50 mb-0">$45.00</p>
+            </div>
+        </div>
+
+        <div class="product-card" data-bs-toggle="modal" data-bs-target="#shopModal"
+             data-name="PHANTOM HOODIE" data-price="$85.00" data-spec="500GSM FRENCH TERRY" 
+             data-img="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1000">
+            <div class="product-img-box"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1000"></div>
+            <div class="product-info">
+                <span style="color:var(--primary); font-size:0.6rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;">Vault-02</span>
+                <h3 class="fw-700 mt-1 mb-1" style="font-size: 1rem;">PHANTOM HOODIE</h3>
+                <p class="small opacity-50 mb-0">$85.00</p>
+            </div>
+        </div>
+
+        <div class="product-card" data-bs-toggle="modal" data-bs-target="#shopModal"
+             data-name="CYBER CARGO V2" data-price="$110.00" data-spec="WATER REPELLENT NYLON" 
+             data-img="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1000">
+            <div class="product-img-box"><img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1000"></div>
+            <div class="product-info">
+                <span style="color:var(--primary); font-size:0.6rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;">Vault-03</span>
+                <h3 class="fw-700 mt-1 mb-1" style="font-size: 1rem;">CYBER CARGO V2</h3>
+                <p class="small opacity-50 mb-0">$110.00</p>
+            </div>
+        </div>
+
+        <div class="product-card" data-bs-toggle="modal" data-bs-target="#shopModal"
+             data-name="ONYX BEANIE" data-price="$30.00" data-spec="100% MERINO WOOL" 
+             data-img="https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=1000">
+            <div class="product-img-box"><img src="https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=1000"></div>
+            <div class="product-info">
+                <span style="color:var(--primary); font-size:0.6rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;">Accessory</span>
+                <h3 class="fw-700 mt-1 mb-1" style="font-size: 1rem;">ONYX BEANIE</h3>
+                <p class="small opacity-50 mb-0">$30.00</p>
+            </div>
+        </div>
+
+        <div class="product-card" data-bs-toggle="modal" data-bs-target="#shopModal"
+             data-name="VECTOR TANK" data-price="$38.00" data-spec="BREATHABLE MESH OVERLAY" 
+             data-img="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=1000">
+            <div class="product-img-box"><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=1000"></div>
+            <div class="product-info">
+                <span style="color:var(--primary); font-size:0.6rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;">Vault-04</span>
+                <h3 class="fw-700 mt-1 mb-1" style="font-size: 1rem;">VECTOR TANK</h3>
+                <p class="small opacity-50 mb-0">$38.00</p>
+            </div>
+        </div>
+
+        <div class="product-card" data-bs-toggle="modal" data-bs-target="#shopModal"
+             data-name="CORE SLING BAG" data-price="$65.00" data-spec="FIDLOCK BUCKLE SYSTEM" 
+             data-img="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=1000">
+            <div class="product-img-box"><img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=1000"></div>
+            <div class="product-info">
+                <span style="color:var(--primary); font-size:0.6rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;">Accessory</span>
+                <h3 class="fw-700 mt-1 mb-1" style="font-size: 1rem;">CORE SLING BAG</h3>
+                <p class="small opacity-50 mb-0">$65.00</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container py-5">
+    <div class="mb-5">
+        <span style="color:var(--primary); font-weight:800; letter-spacing:4px; font-size:0.6rem; text-transform:uppercase;">Community</span>
+        <h2 class="fw-900 mt-2" style="font-size: clamp(1.5rem, 5vw, 2.2rem);">VERIFIED FEEDBACK</h2>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="review-card">
+                <div>
+                    <div class="mb-3" style="color:var(--primary); font-size: 0.6rem; letter-spacing: 2px;">★★★★★</div>
+                    <p class="review-text">"The heavy-weight cotton quality is unmatched. It has that genuine premium structural fit I've been looking for."</p>
+                </div>
+                <span class="review-user">@K_ARCHITECT</span>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="review-card">
+                <div>
+                    <div class="mb-3" style="color:var(--primary); font-size: 0.6rem; letter-spacing: 2px;">★★★★★</div>
+                    <p class="review-text">"Fast shipping. The packaging itself is a work of art. Definitely buying the next drop."</p>
+                </div>
+                <span class="review-user">@ZAYN_99</span>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="review-card">
+                <div>
+                    <div class="mb-3" style="color:var(--primary); font-size: 0.6rem; letter-spacing: 2px;">★★★★★</div>
+                    <p class="review-text">"Finally a brand that understands the intersection of techwear and high-street fashion."</p>
+                </div>
+                <span class="review-user">@VOID_USER</span>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <div class="modal fade" id="shopModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered p-2">
+            <div class="modal-content">
+                <div class="modal-grid">
+                    <div class="modal-visual">
+                        <img id="modalImg" src="" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="modal-details">
+                        <div class="d-flex justify-content-between">
+                            <h2 id="modalTitle" class="fw-900 mb-0"></h2>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <p id="modalPrice" class="opacity-50 mt-2 mb-4"></p>
+                        
+                        <div class="mb-4">
+                            <label class="small fw-900 mb-2 d-block">SELECT CONFIG</label>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-light btn-sm px-3">S</button>
+                                <button class="btn btn-light btn-sm px-3">M</button>
+                            </div>
+                        </div>
+
+                        <button class="btn-action">INITIALIZE ORDER</button>
+                        <p id="modalSpec" class="small opacity-25 mt-4 text-center"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <h2 class="fw-900 mb-4">JOIN THE CULTURE</h2>
+            <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
+                <a href="#" class="filter-btn">Discord</a>
+                <a href="#" class="filter-btn">Twitter</a>
+            </div>
+            <p class="small opacity-25">© 2026 SHINE & SUPPLY. ENGINEERED IN KARACHI.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const shopModal = document.getElementById('shopModal');
+        shopModal.addEventListener('show.bs.modal', function (event) {
+            const card = event.relatedTarget;
+            document.getElementById('modalTitle').innerText = card.getAttribute('data-name');
+            document.getElementById('modalPrice').innerText = card.getAttribute('data-price');
+            document.getElementById('modalSpec').innerText = card.getAttribute('data-spec');
+            document.getElementById('modalImg').src = card.getAttribute('data-img');
+        });
+    </script>
+</body>
+</html>

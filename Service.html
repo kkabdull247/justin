@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | SHINE & SUPPLY</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #367D8A;
+            --primary-glow: rgba(54, 125, 138, 0.3);
+            --bg-dark: #050505;
+            --surface: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); }
+
+
+
+         /* --- Navigation --- */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(1, 0, 1, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-link-custom {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 25px;
+            transition: 0.3s;
+        }
+
+        .nav-link-custom:hover {
+            color: var(--primary);
+        }
+        /* --- Background Accents --- */
+        .bg-glow {
+            position: fixed;
+            top: 0; right: 0;
+            width: 50vw; height: 50vh;
+            background: radial-gradient(circle at top right, rgba(54, 125, 138, 0.08), transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+
+
+        /* --- Hero --- */
+        .hero-section { padding: 120px 0 60px; }
+        .hero-title { font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: -3px; line-height: 1; }
+
+        /* --- Filter Navigation --- */
+        .filter-nav-wrapper {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            backdrop-filter: blur(25px);
+            padding: 8px 15px;
+            top: 25px;
+            z-index: 1000;
+            margin-bottom: 80px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 10px 18px;
+            border-radius: 50px;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            color: white;
+            background: var(--surface);
+        }
+
+        .filter-btn.active { box-shadow: inset 0 0 0 1px var(--primary); }
+
+        #serviceSearch {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 0.75rem;
+            padding-left: 10px;
+            width: 100%;
+        }
+        #serviceSearch:focus { outline: none; }
+
+        /* --- Service Cards --- */
+        .service-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 24px;
+            height: 100%;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-8px);
+        }
+
+        .service-img-box {
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            margin-bottom: 20px;
+            background: #111;
+        }
+
+        .service-img-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(0.5); transition: 1s ease;
+        }
+
+        .service-card:hover img { filter: grayscale(0); transform: scale(1.05); }
+
+        /* --- Package Cards --- */
+        .package-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            border: 1px solid var(--border);
+            border-radius: 35px;
+            padding: 50px 35px;
+            text-align: center;
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .package-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px var(--primary-glow);
+        }
+
+        .price-val { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-top: 15px; }
+        .price-sub { color: var(--primary); font-size: 0.7rem; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; }
+
+        .feature-list { list-style: none; padding: 0; margin: 30px 0; border-top: 1px solid var(--border); }
+        .feature-list li {
+            padding: 15px 0; border-bottom: 1px solid var(--border);
+            font-size: 0.75rem; opacity: 0.6; transition: 0.3s;
+        }
+        .feature-list li:hover { opacity: 1; color: var(--primary); }
+
+        /* --- Common UI --- */
+        .tag-accent {
+            color: var(--primary);
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .btn-premium {
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 14px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            display: block;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-premium:hover { background: white; color: black; }
+
+ /* --- Footer --- */
+        footer {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-social {
+            margin-bottom: 30px;
+        }
+
+        .footer-social a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: var(--primary);
+        }    </style>
+</head>
+<body>
+<header class="nav-header">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="#" class="nav-logo">JUSTIN<span style="color: var(--primary);">.</span></a>
+            <nav class="d-none d-md-block">
+                <a href="j3.html" class="nav-link-custom">Home</a>
+                <a href="#about" class="nav-link-custom">Profile</a>
+                <a href="#expertise" class="nav-link-custom">Expertise</a>
+                <a href="#philosophy" class="nav-link-custom">Values</a>
+                <a href="#contact" class="nav-link-custom">Contact</a>
+            </nav>
+        </div>
+    </header>
+    <div class="bg-glow"></div>
+
+    <header class="hero-section text-center">
+        <div class="container">
+            <span class="tag-accent">Core Ecosystem</span>
+            <h1 class="hero-title fw-900 mt-2">SYSTEM <span style="color: var(--primary);">ARCHITECTS.</span></h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="filter-nav-wrapper">
+            <div class="row align-items-center g-2">
+                <div class="col-lg-3 d-flex align-items-center border-end border-secondary border-opacity-25">
+                    <span class="opacity-25 ms-2">🔍</span>
+                    <input type="text" id="serviceSearch" placeholder="SEARCH SERVICES...">
+                </div>
+                <div class="col-lg-9 d-flex flex-wrap justify-content-center justify-content-lg-end gap-1">
+                    <button class="filter-btn active" data-filter="all">ALL</button>
+                    <button class="filter-btn" data-filter="web">WEB DEV</button>
+                    <button class="filter-btn" data-filter="graphics">GRAPHICS</button>
+                    <button class="filter-btn" data-filter="seo">SEO</button>
+                    <button class="filter-btn" data-filter="content">CONTENT</button>
+                    <button class="filter-btn" data-filter="social">SOCIAL</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5 pb-5" id="servicesGrid">
+            
+            <div class="col-12 col-md-6 col-lg-4 grid-item" data-category="web">
+                <div class="service-card">
+                    <div class="service-img-box"><img src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1000" alt="Web"></div>
+                    <span class="tag-accent">Development</span>
+                    <h3 class="fw-800 h5 mt-2">ULTRA-PREMIUM WEB</h3>
+                    <p class="small opacity-50 mb-4">Responsive architecture and glassmorphism UI using Bootstrap 5.</p>
+                    <a href="#" class="btn-premium">VIEW PORTFOLIO</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 grid-item" data-category="graphics">
+                <div class="service-card">
+                    <div class="service-img-box"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1000" alt="Graphics"></div>
+                    <span class="tag-accent">Visuals</span>
+                    <h3 class="fw-800 h5 mt-2">CUSTOM GRAPHICS</h3>
+                    <p class="small opacity-50 mb-4">High-fidelity designs for Twitter, Discord, and Twitch ecosystems.</p>
+                    <a href="#" class="btn-premium">EXPLORE DESIGNS</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 grid-item" data-category="seo">
+                <div class="service-card">
+                    <div class="service-img-box"><img src="https://images.unsplash.com/photo-1562577309-4932fdd64cd1?q=80&w=1000" alt="SEO"></div>
+                    <span class="tag-accent">Intelligence</span>
+                    <h3 class="fw-800 h5 mt-2">SEO STRATEGY</h3>
+                    <p class="small opacity-50 mb-4">Technical audits and data-driven organic search domination.</p>
+                    <a href="#" class="btn-premium">RANK HIGHER</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 grid-item" data-category="content">
+                <div class="service-card">
+                    <div class="service-img-box"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1000" alt="Writing"></div>
+                    <span class="tag-accent">Editorial</span>
+                    <h3 class="fw-800 h5 mt-2">CONTENT WRITING</h3>
+                    <p class="small opacity-50 mb-4">Authority-building articles designed for industry leadership.</p>
+                    <a href="#" class="btn-premium">READ ARTICLES</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 grid-item" data-category="social">
+                <div class="service-card">
+                    <div class="service-img-box"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000" alt="Social"></div>
+                    <span class="tag-accent">Management</span>
+                    <h3 class="fw-800 h5 mt-2">SOCIAL GOVERNANCE</h3>
+                    <p class="small opacity-50 mb-4">Platform oversight, scheduling, and community engagement.</p>
+                    <a href="#" class="btn-premium">MANAGE PLATFORMS</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 grid-item" data-category="social">
+                <div class="service-card">
+                    <div class="service-img-box"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000" alt="Marketing"></div>
+                    <span class="tag-accent">Marketing</span>
+                    <h3 class="fw-800 h5 mt-2">SOCIAL ROI</h3>
+                    <p class="small opacity-50 mb-4">Paid acquisition and scaling strategies for social channels.</p>
+                    <a href="#" class="btn-premium">SCALE NOW</a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="opacity-10 my-5">
+
+        <div class="text-center mb-5 pt-4">
+            <span class="tag-accent">Acquisition Tiers</span>
+            <h2 class="fw-900 h1 mt-2">INVESTMENT <span style="color: var(--primary);">MODELS.</span></h2>
+        </div>
+
+        <div class="row g-4" id="packagesGrid">
+            <div class="col-lg-4 col-md-6 grid-item" data-category="web">
+                <div class="package-card">
+                    <span class="tag-accent">Tier 01</span>
+                    <h4 class="fw-800 mt-2">ULTRA WEB</h4>
+                    <div class="price-val">$499</div><span class="price-sub">STARTING RATE</span>
+                    <ul class="feature-list">
+                        <li>Multi-Page Build</li>
+                        <li>Glass UI Design</li>
+                        <li>SEO Foundation</li>
+                    </ul>
+                    <a href="#" class="btn-premium">ACQUIRE MODEL</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 grid-item" data-category="graphics">
+                <div class="package-card" style="border-color: var(--primary);">
+                    <span class="tag-accent">Tier 02</span>
+                    <h4 class="fw-800 mt-2">BRAND CORE</h4>
+                    <div class="price-val">$199</div><span class="price-sub">FIXED RATE</span>
+                    <ul class="feature-list">
+                        <li>Vector Identity</li>
+                        <li>Twitch/Twitter Kit</li>
+                        <li>Source Files Included</li>
+                    </ul>
+                    <a href="#" class="btn-premium" style="background: white; color: black;">ACQUIRE MODEL</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 grid-item" data-category="seo">
+                <div class="package-card">
+                    <span class="tag-accent">Tier 03</span>
+                    <h4 class="fw-800 mt-2">SEO ELITE</h4>
+                    <div class="price-val">$299</div><span class="price-sub">MONTHLY MODEL</span>
+                    <ul class="feature-list">
+                        <li>Technical Audit</li>
+                        <li>Keyword Ranking</li>
+                        <li>Backlink Strategy</li>
+                    </ul>
+                    <a href="#" class="btn-premium">ACQUIRE MODEL</a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 grid-item" data-category="content">
+                <div class="package-card">
+                    <span class="tag-accent">Tier 04</span>
+                    <h4 class="fw-800 mt-2">EDITORIAL</h4>
+                    <div class="price-val">$99</div><span class="price-sub">FIXED RATE</span>
+                    <ul class="feature-list">
+                        <li>SEO Articles</li>
+                        <li>Deep Research</li>
+                        <li>Professional Copy</li>
+                    </ul>
+                    <a href="#" class="btn-premium">ACQUIRE MODEL</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 grid-item" data-category="social">
+                <div class="package-card">
+                    <span class="tag-accent">Tier 05</span>
+                    <h4 class="fw-800 mt-2">PLATFORM MGMT</h4>
+                    <div class="price-val">$349</div><span class="price-sub">MONTHLY MODEL</span>
+                    <ul class="feature-list">
+                        <li>Daily Engagement</li>
+                        <li>Content Scheduling</li>
+                        <li>Growth Reports</li>
+                    </ul>
+                    <a href="#" class="btn-premium">ACQUIRE MODEL</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 grid-item" data-category="social">
+                <div class="package-card">
+                    <span class="tag-accent">Tier 06</span>
+                    <h4 class="fw-800 mt-2">SOCIAL ADS</h4>
+                    <div class="price-val">$599</div><span class="price-sub">STARTING RATE</span>
+                    <ul class="feature-list">
+                        <li>Ad Creative</li>
+                        <li>Targeting Setup</li>
+                        <li>ROI Tracking</li>
+                    </ul>
+                    <a href="#" class="btn-premium">ACQUIRE MODEL</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <h2 class="fw-900 mb-5">LET'S CONNECT</h2>
+            <div class="footer-social">
+                <a href="#">Twitter</a>
+                <a href="#">Discord</a>
+                <a href="#">Twitch</a>
+                <a href="#">Email</a>
+            </div>
+            <p class="small opacity-25">© 2026 JUSTIN. ENGINEERED IN KARACHI. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const search = document.getElementById('serviceSearch');
+            const buttons = document.querySelectorAll('.filter-btn');
+            const allGridItems = document.querySelectorAll('.grid-item');
+
+            const filterItems = () => {
+                const term = search.value.toLowerCase();
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+
+                allGridItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    const text = item.innerText.toLowerCase();
+                    
+                    const matchesCategory = (activeFilter === 'all' || category === activeFilter);
+                    const matchesSearch = text.includes(term);
+
+                    if (matchesCategory && matchesSearch) {
+                        item.style.display = "block";
+                        item.animate([
+                            { opacity: 0, transform: 'translateY(15px)' },
+                            { opacity: 1, transform: 'translateY(0)' }
+                        ], { duration: 400, easing: 'ease-out' });
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+            };
+
+            search.addEventListener('input', filterItems);
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterItems();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
