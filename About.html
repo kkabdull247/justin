@@ -42,26 +42,7 @@
             border-radius: 10px;
         }
 
-        /* --- Navigation --- */
-        .nav-header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 0;
-            background: rgba(1, 0, 1, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-logo {
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-            color: #fff;
-            text-decoration: none;
-        }
+       
 
         .nav-link-custom {
             color: var(--text-muted);
@@ -223,19 +204,152 @@
 </head>
 
 <body>
-
-    <header class="nav-header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a href="#" class="nav-logo">JUSTIN<span style="color: var(--primary);">.</span></a>
-            <nav class="d-none d-md-block">
-                <a href="index.html" class="nav-link-custom">Home</a>
-                <a href="#about" class="nav-link-custom">Profile</a>
-                <a href="#expertise" class="nav-link-custom">Expertise</a>
-                <a href="#philosophy" class="nav-link-custom">Values</a>
-                <a href="#contact" class="nav-link-custom">Contact</a>
-            </nav>
+<header class="nav-header">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="logo-wrap">
+            <a href="#" class="nav-logo">JUSTIN<span class="dot">.</span></a>
         </div>
-    </header>
+
+        <nav class="nav-links d-none d-md-flex">
+            <a href="j3.html" class="nav-link-custom">Home</a>
+            <a href="#about" class="nav-link-custom">Profile</a>
+            <a href="#expertise" class="nav-link-custom">Expertise</a>
+            <a href="#contact" class="nav-link-custom">Contact</a>
+        </nav>
+
+        <div class="ham-wrap d-md-none" id="hamTrigger" onclick="menuToggle()">
+            <div class="line l1"></div>
+            <div class="line l2"></div>
+        </div>
+    </div>
+</header>
+
+<div class="full-nav" id="fullNav">
+    <nav class="full-nav-links">
+        <a href="j3.html" onclick="menuToggle()">Home</a>
+        <a href="#about" onclick="menuToggle()">Profile</a>
+        <a href="#expertise" onclick="menuToggle()">Expertise</a>
+        <a href="#contact" onclick="menuToggle()">Contact</a>
+    </nav>
+</div>
+
+<style>
+    :root {
+        --primary: #367D8A;
+        --glass-bg: rgba(5, 5, 5, 0.45);
+        --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 25px 0;
+        z-index: 10000;
+        background: var(--glass-bg) !important;
+        backdrop-filter: blur(15px) saturate(180%);
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        border-bottom: 1px solid var(--glass-border);
+        transition: all 0.4s ease;
+    }
+
+    .nav-logo {
+        font-weight: 900;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .dot { color: var(--primary); }
+
+    .nav-link-custom {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-left: 35px;
+        transition: 0.3s;
+    }
+
+    .ham-wrap {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 7px;
+        z-index: 10001;
+    }
+
+    .line {
+        height: 2px;
+        background: #fff;
+        transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .l1 { width: 30px; }
+    .l2 { width: 20px; }
+
+    .ham-active .l1 { transform: rotate(45deg) translateY(6px); width: 30px; }
+    .ham-active .l2 { transform: rotate(-45deg) translateY(-6px); width: 30px; }
+
+    .full-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #050505;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        opacity: 0;
+        clip-path: circle(0% at 94% 6%);
+        transition: all 0.7s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+
+    .full-nav.active {
+        visibility: visible;
+        opacity: 1;
+        clip-path: circle(150% at 94% 6%);
+    }
+
+    .full-nav-links a {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        margin: 15px 0;
+    }
+
+    @media (max-width: 992px) {
+        .nav-header { padding: 18px 0; }
+        .container { padding: 0 25px !important; }
+    }
+</style>
+
+<script>
+    function menuToggle() {
+        const fullNav = document.getElementById('fullNav');
+        const hamTrigger = document.getElementById('hamTrigger');
+        fullNav.classList.toggle('active');
+        hamTrigger.classList.toggle('ham-active');
+        
+        if (fullNav.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+</script>
 
     <main>
         <section class="about-hero" id="about">
